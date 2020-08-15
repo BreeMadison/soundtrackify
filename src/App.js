@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 //imports that will be moved later
 
-//import {debounce} from "lodash"
+//import { debounce } from "lodash";
 
 // ____________________________________________
 
@@ -28,6 +28,7 @@ function getHashParams() {
   }
   return hashParams;
 }
+
 
 function Search() {
   let tokens = getHashParams();
@@ -59,27 +60,28 @@ function Search() {
     if (search) {
       spotifyApi.searchTracks(search, { limit: 10 }).then((data) => {
         data.tracks.items.map((track) => {
-          songs.push({
+          return songs.push({
             name: track.name,
             artist: track.artists.map((a) => a.name),
-            songID: track.id,
+            id: track.id,
           });
         });
       });
     }
-    //results = songs;
-    console.log(songs);
+
+    return songs;
   };
 
   useEffect(() => {
-    console.log(search);
-    searchSongs(search);
-  });
+    setTracks(searchSongs(search));
+    
+  }, [search]);
 
+  
   return (
     <div className="Search">
       Hello, you logged in!
-      <h2> Search For A Song</h2>
+      <h2> Search For A Fucking Song</h2>
       <input
         className="search-bar"
         type="text"
@@ -95,6 +97,7 @@ function Search() {
 }
 
 let SearchResults = ({ results }) => {
+  //console.log(results);
   return (
     <div>
       <h2>Search Results</h2>
