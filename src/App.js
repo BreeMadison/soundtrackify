@@ -8,10 +8,50 @@ import {
   Redirect,
 } from "react-router-dom";
 
-function Home() {
+//material ui things that will be moved later
+import SearchBar from "material-ui-search-bar";
+
+// ____________________________________________
+
+import Spotify from "spotify-web-api-js";
+let spotifyApi = new Spotify();
+
+//Put this into a util file
+/**
+ * Obtains parameters from the hash of the URL
+ * @return Object
+ */
+function getHashParams() {
+  var hashParams = {};
+  var e,
+    r = /([^&;=]+)=?([^&;]*)/g,
+    q = window.location.hash.substring(1);
+  while ((e = r.exec(q))) {
+    hashParams[e[1]] = decodeURIComponent(e[2]);
+  }
+  return hashParams;
+}
+
+function Intro() {
+  let tokens = getHashParams();
+  console.log(tokens);
+  spotifyApi.setAccessToken(tokens.access_token);
+  console.log(spotifyApi.getAccessToken());
+
   return (
-    <div>
-      <p>Logged in!</p>
+    <div className="Search">
+      Hello, you logged in!
+      <h2> Search For A Fucking Song</h2>
+      <SearchBar 
+      onChange={() => console.log('onChange')}
+      onRequestSearch={(text) => {
+        console.log(text);
+        console.log(spotifyApi.searchTracks(text))
+      }}
+      style={{
+        margin: '0 auto',
+        maxWidth: 1000
+      }}/>
     </div>
   );
 }
@@ -23,10 +63,10 @@ class App extends Component {
         <Router>
           <Switch>
             <Route exact path="/" component={Login} />
-            <Route exact path="/home" component={Home} />
-            <Route path="/callback">
+            <Route exact path="/callback" component={Intro} />
+            {/* <Route path="/callback">
               <Redirect to="/home" />
-            </Route>
+            </Route> */}
           </Switch>
         </Router>
       </div>

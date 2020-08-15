@@ -49,7 +49,7 @@
   color: #f1f2f1;
 }
 
-.App .app-title .period {
+.App .tagline .period {
   color: #3cd2a4;
 }
 
@@ -79,6 +79,13 @@
 
 }
 
-.App .login-footer {
-
+.App .Search {
+  background-color: #181e2a;/*#282c34;*/
+  min-height: 100vh;
+  
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
 }

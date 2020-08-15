@@ -1,6 +1,6 @@
 import React from "react";
 import Button from "@material-ui/core/Button";
-var scopes = ["user-read-email", "user-read-private", "playlist-modify-public"];
+var scopes = ["user-read-email", "user-read-private", "playlist-modify-public", "playlist-read-collaborative"];
 
 function Login() {
   return (
