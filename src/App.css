@@ -14,7 +14,7 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: #181e2a;/*#282c34;*/
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -28,11 +28,57 @@
   color: #61dafb;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+
+.App .login-menu {
+	padding: 30px;
+	margin-right: 2%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.app-description {
+	text-align: right;
+    padding: 30px;
+    border-right: white 5px solid;
+}
+
+.App .app-title {
+	font-size: 13vmin;
+  margin: 20px 0px;
+  color: #f1f2f1;
+}
+
+.App .app-title .period {
+  color: #3cd2a4;
+}
+
+.App  .tagline{
+  color: #f1f2f1;
+  padding-right: 5px;
+}
+
+.App .login-button {
+	padding: 10px 20px;
+	border-radius: 30px;
+	width: fit-content;
+	margin: 25px 0px;
+}
+
+.App .Landing {
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+
+.App .Cover {
+  text-align: center;
+	margin: 0;
+	flex-direction: row;
+  flex-wrap: wrap-reverse;
+
+}
+
+.App .login-footer {
+
 }
