@@ -89,3 +89,15 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
+
+.Search .search-bar {
+  border: 4px #f1f2f1 solid;
+  color: #f1f2f1;
+	padding: 10px 20px;
+  border-radius: 30px;
+  margin: 25px 0px;
+  background-color: #181e2a;
+  width: 700px;
+  height: 30px;
+  font-size: larger;
+}

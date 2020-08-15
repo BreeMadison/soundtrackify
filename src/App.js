@@ -1,19 +1,16 @@
-import React, { Component } from "react";
+import React, { useEffect, useState, Component } from "react";
 import "./App.css";
 import Login from "./components/Login";
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  Redirect,
-} from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
-//material ui things that will be moved later
-import SearchBar from "material-ui-search-bar";
+//imports that will be moved later
+
+//import {debounce} from "lodash"
 
 // ____________________________________________
 
 import Spotify from "spotify-web-api-js";
+
 let spotifyApi = new Spotify();
 
 //Put this into a util file
@@ -32,29 +29,85 @@ function getHashParams() {
   return hashParams;
 }
 
-function Intro() {
+function Search() {
   let tokens = getHashParams();
-  console.log(tokens);
+  //console.log(tokens);
   spotifyApi.setAccessToken(tokens.access_token);
-  console.log(spotifyApi.getAccessToken());
+  //console.log(spotifyApi.getAccessToken());
+
+  const [search, setSearch] = useState("");
+  const [tracks, setTracks] = useState([
+    {
+      name: "American Girl",
+      artist: ["Tom Petty and the Heartbreakers"],
+      songID: "7MRyJPksH3G2cXHN8UKYzP",
+    },
+    {
+      name: "American Kids",
+      artist: ["Kenny Chesney"],
+      songID: "1dgWTMoHwTUnQhOQ8SR5fV",
+    },
+    {
+      name: "American Boy",
+      artist: ["Estelle", "Kanye West"],
+      songID: "22UDw8rSfLbUsaAGTXQ4Z8",
+    },
+  ]);
+
+  let searchSongs = (search) => {
+    const songs = [];
+    if (search) {
+      spotifyApi.searchTracks(search, { limit: 10 }).then((data) => {
+        data.tracks.items.map((track) => {
+          songs.push({
+            name: track.name,
+            artist: track.artists.map((a) => a.name),
+            songID: track.id,
+          });
+        });
+      });
+    }
+    //results = songs;
+    console.log(songs);
+  };
+
+  useEffect(() => {
+    console.log(search);
+    searchSongs(search);
+  });
 
   return (
     <div className="Search">
       Hello, you logged in!
-      <h2> Search For A Fucking Song</h2>
-      <SearchBar 
-      onChange={() => console.log('onChange')}
-      onRequestSearch={(text) => {
-        console.log(text);
-        console.log(spotifyApi.searchTracks(text))
-      }}
-      style={{
-        margin: '0 auto',
-        maxWidth: 1000
-      }}/>
+      <h2> Search For A Song</h2>
+      <input
+        className="search-bar"
+        type="text"
+        placeholder="Define Your Moment"
+        value={search}
+        onChange={(event) => {
+          setSearch(event.target.value);
+        }}
+      ></input>
+      <SearchResults results={tracks} />
     </div>
   );
 }
+
+let SearchResults = ({ results }) => {
+  return (
+    <div>
+      <h2>Search Results</h2>
+      {results.map((result, i) => (
+        <div key={i}>
+          <li>
+            {result.name} by {result.artist.join(", ")}
+          </li>
+        </div>
+      ))}
+    </div>
+  );
+};
 
 class App extends Component {
   render() {
@@ -63,7 +116,7 @@ class App extends Component {
         <Router>
           <Switch>
             <Route exact path="/" component={Login} />
-            <Route exact path="/callback" component={Intro} />
+            <Route exact path="/callback" component={Search} />
             {/* <Route path="/callback">
               <Redirect to="/home" />
             </Route> */}
